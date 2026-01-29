@@ -92,10 +92,12 @@ if 'DATABASE_URL' in os.environ:
         )
     }
 else:
+    # Use persistent disk on Render or local SQLite
+    db_path = '/data/db.sqlite3' if os.path.exists('/data') else BASE_DIR / 'db.sqlite3'
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
+            'NAME': db_path,
         }
     }
 
