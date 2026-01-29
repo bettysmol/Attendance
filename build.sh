@@ -27,17 +27,13 @@ echo "=== Collecting static files ==="
 python manage.py collectstatic --noinput 2>&1 || true
 
 echo ""
-echo "=== Running migrations ==="
-python manage.py migrate --noinput --verbosity 2
+echo "=== Running migrations with retry logic ==="
+python manage.py run_migrations
 
 if [ $? -ne 0 ]; then
   echo "ERROR: Migrations failed!"
   exit 1
 fi
-
-echo ""
-echo "=== Running ensure_migrations command ==="
-python manage.py ensure_migrations
 
 echo ""
 echo "=== Build completed successfully ==="
