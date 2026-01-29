@@ -36,4 +36,8 @@ if [ $? -ne 0 ]; then
 fi
 
 echo ""
+echo "=== Running ensure_migrations command ==="
+python manage.py ensure_migrations
+
+echo ""
 echo "=== Build completed successfully ==="
