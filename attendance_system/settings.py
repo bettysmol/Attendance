@@ -14,7 +14,8 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
-load_dotenv()
+# Load environment variables from .env file (only for development)
+load_dotenv(override=False)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -83,8 +84,10 @@ WSGI_APPLICATION = 'attendance_system.wsgi.application'
 
 import dj_database_url
 
-# Use PostgreSQL in production, SQLite in development
-if os.environ.get('DATABASE_URL'):
+DATABASE_URL = os.environ.get('DATABASE_URL')
+
+if DATABASE_URL:
+    # Use PostgreSQL from environment variable
     DATABASES = {
         'default': dj_database_url.config(
             conn_max_age=600,
@@ -92,6 +95,7 @@ if os.environ.get('DATABASE_URL'):
         )
     }
 else:
+    # Fallback to SQLite for local development
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',

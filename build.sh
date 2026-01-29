@@ -1,19 +1,30 @@
 #!/bin/bash
 set -o errexit
 
+echo "=== Starting Build ==="
+echo "Python version:"
+python --version
+
+echo "\n=== Installing dependencies ==="
 pip install -r requirements.txt
 
-# Wait for database to be ready (PostgreSQL takes a moment to start)
-echo "Waiting for database to be ready..."
-sleep 10
-
-# Check if DATABASE_URL is set
+echo "\n=== Database Configuration ==="
 if [ -z "$DATABASE_URL" ]; then
-  echo "ERROR: DATABASE_URL not set! Using SQLite fallback."
-  echo "Current database setting: $DATABASE_URL"
+  echo "ERROR: DATABASE_URL environment variable is NOT set!"
+  echo "This will cause SQLite to be used instead of PostgreSQL."
+  exit 1
 else
-  echo "DATABASE_URL is set. Using PostgreSQL."
+  echo "✓ DATABASE_URL is set"
+  echo "Database: $(echo $DATABASE_URL | cut -d'@' -f2)"
 fi
 
+echo "\n=== Waiting for database to be ready ==="
+sleep 15
+
+echo "\n=== Collecting static files ==="
 python manage.py collectstatic --noinput
+
+echo "\n=== Running migrations ==="
 python manage.py migrate --noinput
+
+echo "\n=== Build completed successfully ==="
