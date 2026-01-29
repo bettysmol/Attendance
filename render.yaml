@@ -18,6 +18,4 @@ services:
       - key: PYTHON_VERSION
         value: 3.13.4
       - key: DATABASE_URL
-        fromDatabase:
-          name: attendance_db
-          property: connectionString
+        value: postgresql://attendance_db_uix1_user:l0PXwUm7kpwSaAB1e0K2L6OcrRdLYXqk@dpg-d5tdj9dactks73a5cv40-a/attendance_db_uix1
