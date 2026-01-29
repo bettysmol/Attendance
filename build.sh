@@ -5,26 +5,35 @@ echo "=== Starting Build ==="
 echo "Python version:"
 python --version
 
-echo "\n=== Installing dependencies ==="
+echo ""
+echo "=== Installing dependencies ==="
 pip install -r requirements.txt
 
-echo "\n=== Database Configuration ==="
+echo ""
+echo "=== Database Configuration ==="
 if [ -z "$DATABASE_URL" ]; then
   echo "ERROR: DATABASE_URL environment variable is NOT set!"
-  echo "This will cause SQLite to be used instead of PostgreSQL."
   exit 1
 else
   echo "✓ DATABASE_URL is set"
-  echo "Database: $(echo $DATABASE_URL | cut -d'@' -f2)"
 fi
 
-echo "\n=== Waiting for database to be ready ==="
+echo ""
+echo "=== Waiting for database to be ready ==="
 sleep 15
 
-echo "\n=== Collecting static files ==="
-python manage.py collectstatic --noinput
+echo ""
+echo "=== Collecting static files ==="
+python manage.py collectstatic --noinput 2>&1 || true
 
-echo "\n=== Running migrations ==="
-python manage.py migrate --noinput
+echo ""
+echo "=== Running migrations ==="
+python manage.py migrate --noinput --verbosity 2
 
-echo "\n=== Build completed successfully ==="
+if [ $? -ne 0 ]; then
+  echo "ERROR: Migrations failed!"
+  exit 1
+fi
+
+echo ""
+echo "=== Build completed successfully ==="
