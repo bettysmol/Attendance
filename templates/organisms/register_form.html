@@ -1,0 +1,62 @@
+<div class="register-form-container {{ class }}">
+    <div class="card shadow-lg">
+        <div class="card-header bg-light py-3">
+            <div class="text-center">
+                <h2 class="fw-bold mb-1"><i class="bi bi-person-plus me-2"></i>Create Account</h2>
+                <p class="text-muted mb-0">Join us today and start tracking attendance</p>
+            </div>
+        </div>
+        <div class="card-body p-5">
+            
+            {% if messages %}
+                {% for message in messages %}
+                    {% include 'atoms/alert.html' with type=message.tags message=message %}
+                {% endfor %}
+            {% endif %}
+            
+            <form method="post" action="{% url 'register' %}">
+                {% csrf_token %}
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        {% include 'molecules/auth_form_field.html' with field=form.first_name %}
+                    </div>
+                    <div class="col-md-6">
+                        {% include 'molecules/auth_form_field.html' with field=form.last_name %}
+                    </div>
+                </div>
+                
+                {% include 'molecules/auth_form_field.html' with field=form.username %}
+                {% include 'molecules/auth_form_field.html' with field=form.email %}
+                {% include 'molecules/auth_form_field.html' with field=form.phone %}
+                {% include 'molecules/auth_form_field.html' with field=form.role %}
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        {% include 'molecules/auth_form_field.html' with field=form.password1 %}
+                    </div>
+                    <div class="col-md-6">
+                        {% include 'molecules/auth_form_field.html' with field=form.password2 %}
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="terms" required>
+                        <label class="form-check-label" for="terms">
+                            I agree to the <a href="#"><i class="bi bi-file-text me-1"></i>Terms of Service</a> and <a href="#"><i class="bi bi-shield-check me-1"></i>Privacy Policy</a>
+                        </label>
+                    </div>
+                </div>
+                
+                {% include 'atoms/button.html' with text='Create Account' type='submit' variant='primary' class='w-100 py-2' icon='bi-person-plus' %}
+            </form>
+            
+            <div class="text-center mt-4">
+                <p class="text-muted">Already have an account? 
+                    <a href="{% url 'login' %}" class="text-decoration-none fw-bold"><i class="bi bi-box-arrow-in-right me-1"></i>Sign In</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

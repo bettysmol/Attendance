@@ -1,0 +1,54 @@
+<div class="student-list {{ class }}">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0"><i class="bi bi-people me-2"></i>Students</h5>
+        </div>
+        <div class="card-body">
+            {% include 'molecules/search_bar.html' with class='mb-3' placeholder='Search by name or email...' %}
+            
+            {% if students %}
+                <div style="animation: fadeIn 0.3s ease;">
+                    {% for student in students %}
+                        {% include 'molecules/student_card.html' with student=student %}
+                    {% endfor %}
+                </div>
+                
+                {% if students.has_other_pages %}
+                <nav class="mt-4">
+                    <ul class="pagination justify-content-center">
+                        {% if students.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ students.previous_page_number }}">
+                                <i class="bi bi-chevron-left"></i>Previous
+                            </a>
+                        </li>
+                        {% endif %}
+                        
+                        {% for num in students.paginator.page_range %}
+                        <li class="page-item {% if students.number == num %}active{% endif %}">
+                            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                        </li>
+                        {% endfor %}
+                        
+                        {% if students.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ students.next_page_number }}">
+                                Next<i class="bi bi-chevron-right"></i>
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                {% endif %}
+            {% else %}
+                <div class="empty-state">
+                    <div class="empty-state-icon"><i class="bi bi-inbox"></i></div>
+                    <div class="empty-state-text">No Students Found</div>
+                    <div class="empty-state-hint">Students will appear here when enrolled in this course.</div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+EOF

@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block title %}Attendance Report - Attendance System{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">Attendance Report</h1>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <h3 class="card-title">Filter Report</h3>
+        </div>
+        <div class="card-body">
+            <form method="get" class="row" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                <div class="form-group">
+                    <label for="date_from">From Date</label>
+                    <input type="date" id="date_from" name="date_from" class="form-control" value="{{ date_from }}">
+                </div>
+                <div class="form-group">
+                    <label for="date_to">To Date</label>
+                    <input type="date" id="date_to" name="date_to" class="form-control" value="{{ date_to }}">
+                </div>
+                <div class="form-group">
+                    <label for="course">Course</label>
+                    <select id="course" name="course" class="form-select">
+                        <option value="">All Courses</option>
+                        {% for c in courses %}
+                        <option value="{{ c.id }}" {% if course_id|stringformat:"i" == c.id|stringformat:"i" %}selected{% endif %}>
+                            {{ c.code }} - {{ c.name }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group" style="display: flex; align-items: flex-end;">
+                    <button type="submit" class="btn btn-primary btn-block">Filter</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="stats-grid mb-4">
+        <div class="stat-card">
+            <div class="stat-label">Total Records</div>
+            <div class="stat-value">{{ stats.total }}</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Present</div>
+            <div class="stat-value" style="color: var(--success-color);">{{ stats.present }}</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Absent</div>
+            <div class="stat-value" style="color: var(--danger-color);">{{ stats.absent }}</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Late</div>
+            <div class="stat-value" style="color: var(--warning-color);">{{ stats.late }}</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Excused</div>
+            <div class="stat-value" style="color: var(--info-color);">{{ stats.excused }}</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Attendance Rate</div>
+            <div class="stat-value" style="color: var(--primary-color);">{{ stats.present_percentage }}%</div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Attendance Records</h3>
+        </div>
+        {% if attendances %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Student</th>
+                    <th>Course</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Remarks</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for attendance in attendances %}
+                <tr>
+                    <td>
+                        <strong>{{ attendance.student.first_name }} {{ attendance.student.last_name }}</strong>
+                        <div class="text-muted font-medium" style="font-size: 0.875rem;">{{ attendance.student.student_id }}</div>
+                    </td>
+                    <td>{{ attendance.session.course.code }}</td>
+                    <td>{{ attendance.session.date|date:"M d, Y" }}</td>
+                    <td>
+                        {% if attendance.status == 'present' %}
+                        <span class="badge badge-success">Present</span>
+                        {% elif attendance.status == 'absent' %}
+                        <span class="badge badge-danger">Absent</span>
+                        {% elif attendance.status == 'late' %}
+                        <span class="badge badge-warning">Late</span>
+                        {% elif attendance.status == 'excused' %}
+                        <span class="badge badge-info">Excused</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ attendance.remarks|default:"-" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="card-body">
+            <p class="text-muted">No attendance records found for the selected filters.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

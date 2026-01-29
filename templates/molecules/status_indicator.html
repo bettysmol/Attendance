@@ -1,0 +1,15 @@
+<div class="status-indicator d-flex align-items-center gap-2 {{ class }}">
+    {% if status == 'present' %}
+        <i class="bi bi-check-circle-fill text-success" style="font-size: 1.25rem;" data-tooltip="Student was present"></i>
+        <span class="badge badge-present">Present</span>
+    {% elif status == 'absent' %}
+        <i class="bi bi-x-circle-fill text-danger" style="font-size: 1.25rem;" data-tooltip="Student was absent"></i>
+        <span class="badge badge-absent">Absent</span>
+    {% elif status == 'late' %}
+        <i class="bi bi-exclamation-circle-fill text-warning" style="font-size: 1.25rem;" data-tooltip="Student arrived late"></i>
+        <span class="badge badge-late">Late</span>
+    {% elif status == 'excused' %}
+        <i class="bi bi-info-circle-fill text-info" style="font-size: 1.25rem;" data-tooltip="Absence excused"></i>
+        <span class="badge badge-excused">Excused</span>
+    {% endif %}
+</div>

@@ -1,0 +1,41 @@
+<div class="login-form-container {{ class }}">
+    <div class="card shadow-lg">
+        <div class="card-header bg-light py-3">
+            <div class="text-center">
+                <h2 class="fw-bold mb-1"><i class="bi bi-box-arrow-in-right me-2"></i>Welcome Back</h2>
+                <p class="text-muted mb-0">Sign in to continue to your account</p>
+            </div>
+        </div>
+        <div class="card-body p-5">
+            
+            {% if messages %}
+                {% for message in messages %}
+                    {% include 'atoms/alert.html' with type=message.tags message=message %}
+                {% endfor %}
+            {% endif %}
+            
+            <form method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                
+                {% for field in form %}
+                    {% if field.field.widget.input_type != 'checkbox' %}
+                        {% include 'molecules/auth_form_field.html' with field=field %}
+                    {% endif %}
+                {% endfor %}
+                
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    {% include 'atoms/checkbox.html' with id='remember_me' name='remember_me' label='Remember me' checked=True %}
+                    <a href="{% url 'password_reset' %}" class="text-decoration-none"><i class="bi bi-key me-1"></i>Forgot password?</a>
+                </div>
+                
+                {% include 'atoms/button.html' with text='Sign In' type='submit' variant='primary' class='w-100 py-2' icon='bi-box-arrow-in-right' %}
+            </form>
+            
+            <div class="text-center mt-4">
+                <p class="text-muted">Don't have an account? 
+                    <a href="{% url 'register' %}" class="text-decoration-none fw-bold"><i class="bi bi-person-plus me-1"></i>Sign Up</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

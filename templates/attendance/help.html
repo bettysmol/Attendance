@@ -1,0 +1,476 @@
+{% extends "base.html" %}
+
+{% block title %}Help & Documentation - Attendance System{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div style="max-width: 1100px; margin: 2rem auto;">
+        <!-- Header -->
+        <div class="card mb-4" style="background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%); color: white;">
+            <div class="card-body p-5">
+                <h1 style="color: white; margin: 0 0 0.5rem 0;">
+                    <i class="bi bi-book me-2"></i>Help & Documentation
+                </h1>
+                <p class="lead mb-0">Guide for managing classes, students, and attendance tracking</p>
+            </div>
+        </div>
+
+        <!-- Quick Navigation -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="list-group sticky-top" style="top: 80px;">
+                    <a href="#getting-started" class="list-group-item list-group-item-action">
+                        <i class="bi bi-play-circle me-2"></i>Getting Started
+                    </a>
+                    <a href="#faq" class="list-group-item list-group-item-action">
+                        <i class="bi bi-question-lg me-2"></i>FAQ
+                    </a>
+                    <a href="#features" class="list-group-item list-group-item-action">
+                        <i class="bi bi-star me-2"></i>Features
+                    </a>
+                    <a href="#troubleshooting" class="list-group-item list-group-item-action">
+                        <i class="bi bi-tools me-2"></i>Troubleshooting
+                    </a>
+                    <a href="#contact" class="list-group-item list-group-item-action">
+                        <i class="bi bi-envelope me-2"></i>Support
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <!-- Getting Started Section -->
+                <section id="getting-started" class="mb-5">
+                    <h2 class="mb-3">
+                        <i class="bi bi-play-circle text-primary me-2"></i>Getting Started
+                    </h2>
+
+                    <div class="card mb-3">
+                        <div class="card-header bg-light">
+                            <h5 class="card-title mb-0">First Time Setup</h5>
+                        </div>
+                        <div class="card-body">
+                            <ol class="ps-3">
+                                <li class="mb-2"><strong>Create Your Account</strong> — Register with your username, email, and password</li>
+                                <li class="mb-2"><strong>Complete Your Profile</strong> — Add your phone number and avatar for easy identification</li>
+                                <li class="mb-2"><strong>Explore the Dashboard</strong> — Visit the dashboard to see your courses and attendance overview</li>
+                                <li class="mb-2"><strong>Read This Documentation</strong> — Familiarize yourself with system features</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="card mb-3">
+                        <div class="card-header bg-light">
+                            <h5 class="card-title mb-0">Navigation Tips</h5>
+                        </div>
+                        <div class="card-body">
+                            <ul class="ps-3">
+                                <li class="mb-2"><strong>Top Navigation Bar</strong> — Quick access to main sections (Courses, Students, Reports)</li>
+                                <li class="mb-2"><strong>Your Profile</strong> — Click your name (top right) to view and edit profile settings</li>
+                                <li class="mb-2"><strong>Search Features</strong> — Use search bars to quickly find courses or students</li>
+                                <li class="mb-2"><strong>Mobile Friendly</strong> — System works well on smartphones and tablets</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- FAQ Section -->
+                <section id="faq" class="mb-5">
+                    <h2 class="mb-3">
+                        <i class="bi bi-question-lg text-warning me-2"></i>Frequently Asked Questions
+                    </h2>
+
+                    <div class="accordion" id="faqAccordion">
+                        <!-- Student Questions -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                    How can I view my attendance records?
+                                </button>
+                            </h2>
+                            <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Navigate to the <strong>Dashboard</strong> to see your overall attendance statistics. Click on a specific course to view detailed attendance for that course. You can also check <strong>My Attendance</strong> in your profile for a comprehensive view.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                    What do the attendance statuses mean?
+                                </button>
+                            </h2>
+                            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    <ul>
+                                        <li><strong>Present</strong> — You attended the session</li>
+                                        <li><strong>Absent</strong> — You were not present</li>
+                                        <li><strong>Late</strong> — You arrived after the session started</li>
+                                        <li><strong>Excused</strong> — Your absence was approved by the instructor</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                    How is my attendance percentage calculated?
+                                </button>
+                            </h2>
+                            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Attendance percentage is calculated as: <code>(Present sessions / Total sessions) × 100</code>. Late and Absent count as not present. Excused absences may be handled differently per instructor policy.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Instructor Questions -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                    How do I create a new course?
+                                </button>
+                            </h2>
+                            <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    <ol>
+                                        <li>Go to <strong>Courses</strong> → <strong>Add Course</strong></li>
+                                        <li>Fill in the course details:
+                                            <ul>
+                                                <li>Course Code (e.g., CS101)</li>
+                                                <li>Course Name</li>
+                                                <li>Description</li>
+                                                <li>Capacity and Credits</li>
+                                                <li>Semester</li>
+                                            </ul>
+                                        </li>
+                                        <li>Select enrolled students (optional, add later)</li>
+                                        <li>Click Save</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+                                    How do I mark attendance for a session?
+                                </button>
+                            </h2>
+                            <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    <ol>
+                                        <li>Go to <strong>Courses</strong> and select a course</li>
+                                        <li>Create a new <strong>Attendance Session</strong> with date and time</li>
+                                        <li>Click <strong>Mark Attendance</strong> for that session</li>
+                                        <li>Select each student's status (Present/Absent/Late/Excused)</li>
+                                        <li>Save the attendance record</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq6">
+                                    Can I edit attendance records after marking them?
+                                </button>
+                            </h2>
+                            <div id="faq6" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Yes! You can edit individual attendance records. Go to the session detail page and click on a student's record to update their status. This is useful for correcting mistakes or processing late submissions.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq7">
+                                    How do I generate attendance reports?
+                                </button>
+                            </h2>
+                            <div id="faq7" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    <ol>
+                                        <li>Go to <strong>Reports</strong> → <strong>Attendance</strong></li>
+                                        <li>Select optional filters:
+                                            <ul>
+                                                <li>Course (to filter by specific course)</li>
+                                                <li>Date Range (to see attendance for a specific period)</li>
+                                            </ul>
+                                        </li>
+                                        <li>View or export the report with attendance statistics</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Admin Questions -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq8">
+                                    How do I manage users as an admin?
+                                </button>
+                            </h2>
+                            <div id="faq8" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    <ol>
+                                        <li>Go to <strong>Admin Panel</strong> (top right menu)</li>
+                                        <li>Select <strong>Users</strong> or <strong>Profiles</strong></li>
+                                        <li>Click <strong>Add User</strong> to create a new account</li>
+                                        <li>Assign the user a role: Admin, Instructor, or Student</li>
+                                        <li>Save to create the account</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq9">
+                                    How do I view system-wide statistics?
+                                </button>
+                            </h2>
+                            <div id="faq9" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    As an admin, go to the <strong>Admin Dashboard</strong> to view:
+                                    <ul>
+                                        <li>Total students, courses, and sessions</li>
+                                        <li>Overall system attendance rate</li>
+                                        <li>Top courses by enrollment</li>
+                                        <li>Recent activity and sessions</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- General Questions -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq10">
+                                    I forgot my password. How do I reset it?
+                                </button>
+                            </h2>
+                            <div id="faq10" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    <ol>
+                                        <li>On the login page, click <strong>Forgot Password</strong></li>
+                                        <li>Enter your registered email address</li>
+                                        <li>Check your email for a reset link</li>
+                                        <li>Click the link and set a new password</li>
+                                        <li>Login with your new password</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Features Section -->
+                <section id="features" class="mb-5">
+                    <h2 class="mb-3">
+                        <i class="bi bi-star text-success me-2"></i>System Features
+                    </h2>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <i class="bi bi-calendar2-check text-primary me-2"></i>Attendance Tracking
+                                    </h5>
+                                    <p>Mark student attendance per session with multiple status options (Present, Absent, Late, Excused). Edit records anytime.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <i class="bi bi-bar-chart text-success me-2"></i>Statistics & Reports
+                                    </h5>
+                                    <p>View real-time attendance statistics by student, course, or date range. Generate comprehensive reports for analysis.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <i class="bi bi-people text-info me-2"></i>User Management
+                                    </h5>
+                                    <p>Manage multiple user roles (Admin, Instructor, Student) with role-based access control and permissions.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <i class="bi bi-search text-warning me-2"></i>Search & Filter
+                                    </h5>
+                                    <p>Quickly find courses, students, or attendance records with powerful search and filtering capabilities.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <i class="bi bi-book text-secondary me-2"></i>Course Management
+                                    </h5>
+                                    <p>Create and manage courses with capacity limits, credits, and semester information. Enroll students with flexibility.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <i class="bi bi-shield-check text-danger me-2"></i>Data Security
+                                    </h5>
+                                    <p>Secure authentication, password reset functionality, and role-based access ensure data protection and privacy.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Troubleshooting Section -->
+                <section id="troubleshooting" class="mb-5">
+                    <h2 class="mb-3">
+                        <i class="bi bi-tools text-danger me-2"></i>Troubleshooting
+                    </h2>
+
+                    <div class="card mb-3">
+                        <div class="card-header bg-light">
+                            <h5 class="card-title mb-0">I'm not seeing a course I should have access to</h5>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Solution:</strong></p>
+                            <ul>
+                                <li>Verify your enrollment status — ask your instructor to add you to the course</li>
+                                <li>Refresh the page (Ctrl+R or Cmd+R)</li>
+                                <li>Log out and log back in to refresh permissions</li>
+                                <li>Contact your system administrator if the problem persists</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card mb-3">
+                        <div class="card-header bg-light">
+                            <h5 class="card-title mb-0">I can't mark attendance for a session</h5>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Solution:</strong></p>
+                            <ul>
+                                <li>Verify you're an instructor or admin (only these roles can mark attendance)</li>
+                                <li>Ensure the course exists and has students enrolled</li>
+                                <li>Create an attendance session first before marking attendance</li>
+                                <li>Check that students are added to the course</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card mb-3">
+                        <div class="card-header bg-light">
+                            <h5 class="card-title mb-0">My profile picture isn't showing</h5>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Solution:</strong></p>
+                            <ul>
+                                <li>Go to your profile and upload a new avatar image</li>
+                                <li>Supported formats: JPG, PNG (max 5MB)</li>
+                                <li>Refresh the page after uploading</li>
+                                <li>Clear browser cache if still not showing</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card mb-3">
+                        <div class="card-header bg-light">
+                            <h5 class="card-title mb-0">The system is running slowly</h5>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Solution:</strong></p>
+                            <ul>
+                                <li>Clear your browser cache (Ctrl+Shift+Delete or Cmd+Shift+Delete)</li>
+                                <li>Close other browser tabs and applications</li>
+                                <li>Use a different browser to test</li>
+                                <li>Contact your system administrator if slowness persists</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card mb-3">
+                        <div class="card-header bg-light">
+                            <h5 class="card-title mb-0">I see an error message</h5>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Solution:</strong></p>
+                            <ul>
+                                <li>Read the error message carefully — it often explains what went wrong</li>
+                                <li>Try the action again</li>
+                                <li>If error persists, take a screenshot and contact support</li>
+                                <li>Make note of the error code or message text</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Support Section -->
+                <section id="contact">
+                    <h2 class="mb-3">
+                        <i class="bi bi-envelope text-info me-2"></i>Need More Help?
+                    </h2>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="lead">We're here to help!</p>
+                            <ul class="list-unstyled">
+                                <li class="mb-2">
+                                    <i class="bi bi-question-circle me-2"></i>
+                                    <strong>Questions?</strong> Contact your system administrator
+                                </li>
+                                <li class="mb-2">
+                                    <i class="bi bi-file-earmark me-2"></i>
+                                    <strong>Documentation:</strong> Check the README for technical details
+                                </li>
+                                <li class="mb-2">
+                                    <i class="bi bi-speedometer2 me-2"></i>
+                                    <strong>First Time?</strong> Start with the Welcome page
+                                </li>
+                                <li class="mb-2">
+                                    <i class="bi bi-bug me-2"></i>
+                                    <strong>Report Issues:</strong> Contact your administrator with details
+                                </li>
+                            </ul>
+
+                            <div class="alert alert-info mt-4">
+                                <strong>Pro Tip:</strong> Bookmark this help page for quick reference. Most features have inline help text in forms to guide you.
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .sticky-top {
+        position: sticky;
+    }
+    
+    .accordion-button:not(.collapsed) {
+        background-color: var(--primary-color);
+        color: white;
+    }
+    
+    .accordion-button:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %}Import Students - {{ course.code }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h2 class="mb-4"><i class="bi bi-upload me-2"></i>Import Students</h2>
+            <p class="text-muted">{{ course.code }} - {{ course.name }}</p>
+            
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">CSV Format Requirements</h5>
+                </div>
+                <div class="card-body">
+                    <p class="mb-2"><strong>Required columns:</strong></p>
+                    <ul class="small">
+                        <li><code>student_id</code> - Unique student identifier</li>
+                        <li><code>first_name</code> - Student's first name</li>
+                        <li><code>last_name</code> - Student's last name</li>
+                        <li><code>email</code> - Valid email address</li>
+                    </ul>
+                    
+                    <p class="mb-2"><strong>Optional columns:</strong></p>
+                    <ul class="small">
+                        <li><code>phone</code> - Contact phone number</li>
+                        <li><code>department</code> - Academic department</li>
+                        <li><code>major</code> - Field of study</li>
+                    </ul>
+                    
+                    <p class="mb-0"><strong>Example CSV:</strong></p>
+                    <pre class="bg-light p-2 small"><code>student_id,first_name,last_name,email,phone,department,major
+STU001,John,Doe,john.doe@example.com,1234567890,Engineering,Computer Science
+STU002,Jane,Smith,jane.smith@example.com,0987654321,Science,Physics</code></pre>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="id_csv_file" class="form-label">Select CSV File</label>
+                            <input type="file" class="form-control" id="id_csv_file" name="csv_file" accept=".csv" required>
+                            <small class="form-text text-muted d-block mt-1">{{ form.csv_file.help_text }}</small>
+                            {% if form.csv_file.errors %}
+                                <div class="invalid-feedback d-block">{{ form.csv_file.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="id_course" class="form-label">Course</label>
+                            {{ form.course }}
+                            <small class="form-text text-muted d-block mt-1">{{ form.course.help_text }}</small>
+                            {% if form.course.errors %}
+                                <div class="invalid-feedback d-block">{{ form.course.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-upload me-1"></i>Import Students
+                            </button>
+                            <a href="{% url 'course_detail' course.id %}" class="btn btn-secondary">
+                                <i class="bi bi-arrow-left me-1"></i>Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,1046 @@
+/* ============================================
+   RESPONSIVE DESIGN CSS
+   Mobile-First Responsive Framework
+   ============================================ */
+
+:root {
+    /* Responsive Breakpoints */
+    --breakpoint-xs: 0;
+    --breakpoint-sm: 576px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 992px;
+    --breakpoint-xl: 1200px;
+    --breakpoint-xxl: 1400px;
+}
+
+/* ============================================
+   MOBILE FIRST BASE STYLES (Extra Small - < 576px)
+   ============================================ */
+
+html {
+    font-size: 14px;
+}
+
+body {
+    font-size: 0.875rem;
+    line-height: 1.5;
+}
+
+.container {
+    padding: 0 1rem;
+}
+
+.page-content {
+    padding: 1rem 1rem !important;
+}
+
+/* Typography - Mobile Optimized */
+h1 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+h2 {
+    font-size: 1.25rem;
+    margin-bottom: 0.875rem;
+}
+
+h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+}
+
+h4 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+h5, h6 {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+p {
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Navigation - Mobile Optimized */
+.navbar {
+    padding: 0.5rem 0;
+}
+
+.navbar-brand {
+    font-size: 1.1rem !important;
+}
+
+.nav-link {
+    font-size: 0.8rem !important;
+    padding: 0.4rem 0.5rem !important;
+    margin: 0 0.1rem !important;
+}
+
+.navbar-toggler {
+    padding: 0.25rem 0.5rem;
+}
+
+.dropdown-menu {
+    min-width: 200px;
+    font-size: 0.875rem;
+}
+
+/* Cards - Mobile Optimized */
+.card {
+    margin-bottom: 1rem;
+    border-radius: 0.5rem;
+}
+
+.card-body {
+    padding: 1rem;
+}
+
+.card-header {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+}
+
+.card-footer {
+    padding: 0.75rem 1rem;
+}
+
+/* Buttons - Mobile Optimized */
+.btn {
+    font-size: 0.875rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 0.375rem;
+    white-space: normal;
+}
+
+.btn-sm {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+}
+
+.btn-lg {
+    font-size: 1rem;
+    padding: 0.6rem 1.2rem;
+}
+
+/* Forms - Mobile Optimized */
+.form-control,
+.form-select {
+    font-size: 1rem; /* Prevents zoom on iOS */
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.375rem;
+    width: 100%;
+}
+
+.form-group,
+.mb-3 {
+    margin-bottom: 1rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.35rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+/* Tables - Mobile Scrollable */
+.table {
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+.table-responsive {
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.table thead {
+    background-color: #f8f9fa;
+}
+
+.table td,
+.table th {
+    padding: 0.5rem;
+    vertical-align: middle;
+}
+
+/* Grid System - Mobile First */
+.row {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -0.5rem;
+    margin-left: -0.5rem;
+}
+
+.col,
+[class*="col-"] {
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+    width: 100%;
+    flex-basis: 100%;
+}
+
+/* Stat Cards - Mobile */
+.stat-card {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.stat-icon {
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    margin: 0.5rem 0;
+}
+
+.stat-label {
+    font-size: 0.75rem;
+}
+
+/* Modals - Mobile Optimized */
+.modal-dialog {
+    margin: 0.5rem;
+}
+
+.modal-content {
+    border-radius: 0.5rem;
+}
+
+.modal-body {
+    padding: 1rem;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+/* Alerts - Mobile Optimized */
+.alert {
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    border-radius: 0.375rem;
+}
+
+.alert i {
+    margin-right: 0.5rem;
+}
+
+/* Badge - Mobile Optimized */
+.badge {
+    font-size: 0.7rem;
+    padding: 0.25rem 0.5rem;
+    white-space: normal;
+    word-break: break-word;
+}
+
+/* Progress Bar - Mobile */
+.progress {
+    height: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.progress-bar {
+    font-size: 0.7rem;
+    line-height: 1rem;
+}
+
+/* Pagination - Mobile */
+.pagination {
+    flex-wrap: wrap;
+    gap: 0.25rem;
+}
+
+.page-link {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.8rem;
+}
+
+/* List Groups - Mobile */
+.list-group-item {
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+}
+
+/* Breadcrumb - Mobile */
+.breadcrumb {
+    font-size: 0.8rem;
+    padding: 0.5rem 0;
+    gap: 0.25rem;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    content: "/";
+    margin: 0 0.25rem;
+}
+
+/* Utilities - Mobile Spacing */
+.py-5 {
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+}
+
+.py-4 {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+}
+
+.mb-4 {
+    margin-bottom: 1rem !important;
+}
+
+.mb-3 {
+    margin-bottom: 0.75rem !important;
+}
+
+.mb-2 {
+    margin-bottom: 0.5rem !important;
+}
+
+.mt-4 {
+    margin-top: 1rem !important;
+}
+
+.gap-2 {
+    gap: 0.5rem !important;
+}
+
+.gap-3 {
+    gap: 1rem !important;
+}
+
+/* ============================================
+   SMALL DEVICES (Small - >= 576px)
+   ============================================ */
+
+@media (min-width: 576px) {
+    html {
+        font-size: 15px;
+    }
+
+    body {
+        font-size: 0.9rem;
+    }
+
+    .container {
+        max-width: 540px;
+        padding: 0 1.5rem;
+    }
+
+    .page-content {
+        padding: 1.5rem 1.5rem !important;
+    }
+
+    h1 {
+        font-size: 1.75rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    h3 {
+        font-size: 1.25rem;
+    }
+
+    .card-body {
+        padding: 1.25rem;
+    }
+
+    .btn {
+        font-size: 0.9rem;
+        padding: 0.5rem 1rem;
+    }
+
+    .stat-icon {
+        font-size: 2rem;
+    }
+
+    .stat-value {
+        font-size: 1.75rem;
+    }
+
+    .table td,
+    .table th {
+        padding: 0.75rem;
+    }
+
+    .alert {
+        padding: 1rem 1.25rem;
+    }
+
+    .col-sm {
+        flex: 1 0 0%;
+    }
+
+    .col-sm-6 {
+        width: 50%;
+        flex: 0 0 50%;
+    }
+
+    .col-sm-4 {
+        width: 33.333%;
+        flex: 0 0 33.333%;
+    }
+
+    .d-sm-none {
+        display: none !important;
+    }
+
+    .d-sm-inline {
+        display: inline !important;
+    }
+
+    .d-sm-block {
+        display: block !important;
+    }
+
+    .d-sm-flex {
+        display: flex !important;
+    }
+}
+
+/* ============================================
+   MEDIUM DEVICES (Medium - >= 768px)
+   ============================================ */
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+
+    body {
+        font-size: 0.9375rem;
+    }
+
+    .container {
+        max-width: 720px;
+        padding: 0 2rem;
+    }
+
+    .page-content {
+        padding: 2rem 2rem !important;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.625rem;
+    }
+
+    h3 {
+        font-size: 1.375rem;
+    }
+
+    h4 {
+        font-size: 1.1rem;
+    }
+
+    .navbar-brand {
+        font-size: 1.35rem !important;
+    }
+
+    .nav-link {
+        font-size: 0.9375rem !important;
+        padding: 0.5rem 0.75rem !important;
+    }
+
+    .card-body {
+        padding: 1.5rem;
+    }
+
+    .card-header {
+        padding: 1rem 1.5rem;
+    }
+
+    .btn {
+        font-size: 0.9375rem;
+        padding: 0.5rem 1rem;
+    }
+
+    .form-control,
+    .form-select {
+        font-size: 0.9375rem;
+        padding: 0.6rem 0.9rem;
+    }
+
+    .stat-card {
+        padding: 1.5rem;
+    }
+
+    .stat-icon {
+        font-size: 2.25rem;
+    }
+
+    .stat-value {
+        font-size: 2rem;
+    }
+
+    .table {
+        font-size: 0.875rem;
+    }
+
+    .table td,
+    .table th {
+        padding: 1rem;
+    }
+
+    .col-md {
+        flex: 1 0 0%;
+    }
+
+    .col-md-6 {
+        width: 50%;
+        flex: 0 0 50%;
+    }
+
+    .col-md-4 {
+        width: 33.333%;
+        flex: 0 0 33.333%;
+    }
+
+    .col-md-3 {
+        width: 25%;
+        flex: 0 0 25%;
+    }
+
+    .col-md-2 {
+        width: 16.666%;
+        flex: 0 0 16.666%;
+    }
+
+    .d-md-none {
+        display: none !important;
+    }
+
+    .d-md-inline {
+        display: inline !important;
+    }
+
+    .d-md-block {
+        display: block !important;
+    }
+
+    .d-md-flex {
+        display: flex !important;
+    }
+
+    /* Flexible layouts for medium devices */
+    .flex-md-row {
+        flex-direction: row !important;
+    }
+
+    .flex-md-column {
+        flex-direction: column !important;
+    }
+
+    /* Dashboard optimizations */
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+
+    .dashboard-grid-full {
+        grid-column: 1 / -1;
+    }
+}
+
+/* ============================================
+   LARGE DEVICES (Large - >= 992px)
+   ============================================ */
+
+@media (min-width: 992px) {
+    .container {
+        max-width: 960px;
+        padding: 0 2.5rem;
+    }
+
+    .page-content {
+        padding: 2.5rem 2.5rem !important;
+    }
+
+    .navbar-expand-lg .navbar-collapse {
+        display: flex !important;
+    }
+
+    .navbar-nav {
+        flex-direction: row;
+    }
+
+    .nav-item {
+        margin: 0 0.25rem;
+    }
+
+    .col-lg {
+        flex: 1 0 0%;
+    }
+
+    .col-lg-8 {
+        width: 66.666%;
+        flex: 0 0 66.666%;
+    }
+
+    .col-lg-6 {
+        width: 50%;
+        flex: 0 0 50%;
+    }
+
+    .col-lg-4 {
+        width: 33.333%;
+        flex: 0 0 33.333%;
+    }
+
+    .col-lg-3 {
+        width: 25%;
+        flex: 0 0 25%;
+    }
+
+    .col-lg-2 {
+        width: 16.666%;
+        flex: 0 0 16.666%;
+    }
+
+    .col-lg-1 {
+        width: 8.333%;
+        flex: 0 0 8.333%;
+    }
+
+    .d-lg-none {
+        display: none !important;
+    }
+
+    .d-lg-inline {
+        display: inline !important;
+    }
+
+    .d-lg-block {
+        display: block !important;
+    }
+
+    .d-lg-flex {
+        display: flex !important;
+    }
+
+    /* Dashboard grid for large screens */
+    .dashboard-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .dashboard-grid-full {
+        grid-column: 1 / -1;
+    }
+
+    /* Wider modals for large screens */
+    .modal-lg {
+        max-width: 700px;
+    }
+}
+
+/* ============================================
+   EXTRA LARGE DEVICES (XL - >= 1200px)
+   ============================================ */
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1140px;
+        padding: 0 3rem;
+    }
+
+    .page-content {
+        padding: 3rem 3rem !important;
+    }
+
+    .col-xl {
+        flex: 1 0 0%;
+    }
+
+    .col-xl-8 {
+        width: 66.666%;
+        flex: 0 0 66.666%;
+    }
+
+    .col-xl-6 {
+        width: 50%;
+        flex: 0 0 50%;
+    }
+
+    .col-xl-4 {
+        width: 33.333%;
+        flex: 0 0 33.333%;
+    }
+
+    .col-xl-3 {
+        width: 25%;
+        flex: 0 0 25%;
+    }
+
+    .d-xl-none {
+        display: none !important;
+    }
+
+    .d-xl-flex {
+        display: flex !important;
+    }
+
+    /* Dashboard grid for extra large screens */
+    .dashboard-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    /* Tables become fully visible */
+    .table-responsive {
+        overflow-x: visible;
+    }
+}
+
+/* ============================================
+   EXTRA EXTRA LARGE DEVICES (XXL - >= 1400px)
+   ============================================ */
+
+@media (min-width: 1400px) {
+    .container {
+        max-width: 1320px;
+    }
+
+    .col-xxl {
+        flex: 1 0 0%;
+    }
+
+    .col-xxl-5 {
+        width: 41.666%;
+        flex: 0 0 41.666%;
+    }
+
+    .col-xxl-7 {
+        width: 58.333%;
+        flex: 0 0 58.333%;
+    }
+
+    .d-xxl-flex {
+        display: flex !important;
+    }
+}
+
+/* ============================================
+   LANDSCAPE ORIENTATION FIXES
+   ============================================ */
+
+@media (orientation: landscape) and (max-height: 600px) {
+    .navbar {
+        padding: 0.25rem 0;
+    }
+
+    .nav-link {
+        padding: 0.35rem 0.5rem !important;
+    }
+
+    .card {
+        margin-bottom: 0.75rem;
+    }
+
+    .card-body {
+        padding: 0.75rem;
+    }
+
+    .py-5 {
+        padding-top: 1rem !important;
+        padding-bottom: 1rem !important;
+    }
+
+    h1 {
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+    }
+
+    h2 {
+        font-size: 1.1rem;
+        margin-bottom: 0.4rem;
+    }
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+
+@media print {
+    body {
+        background: white;
+        color: black;
+    }
+
+    .navbar,
+    .footer,
+    .btn,
+    .modal {
+        display: none !important;
+    }
+
+    .container {
+        max-width: 100%;
+    }
+
+    .page-content {
+        padding: 0 !important;
+    }
+
+    a {
+        text-decoration: underline;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    table td,
+    table th {
+        border: 1px solid #000;
+        padding: 0.5rem;
+    }
+}
+
+/* ============================================
+   TOUCH DEVICE OPTIMIZATIONS
+   ============================================ */
+
+@media (hover: none) and (pointer: coarse) {
+    /* Increase touch target sizes */
+    .btn,
+    .nav-link,
+    .list-group-item,
+    .pagination .page-link {
+        min-height: 44px;
+        min-width: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .card {
+        margin-bottom: 1rem;
+    }
+
+    /* Remove hover effects on touch devices */
+    .btn:hover,
+    .card:hover,
+    .nav-link:hover {
+        transform: none;
+        box-shadow: none;
+    }
+
+    /* Use active state instead */
+    .btn:active,
+    .nav-link:active {
+        background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    /* Larger text for readability */
+    body {
+        font-size: 1rem;
+    }
+}
+
+/* ============================================
+   DARK MODE SUPPORT (Optional)
+   ============================================ */
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1a1a1a;
+        color: #e0e0e0;
+    }
+
+    .card {
+        background-color: #2a2a2a;
+        border-color: #444;
+    }
+
+    .card-header {
+        background-color: #333;
+        border-color: #444;
+    }
+
+    .table {
+        border-color: #444;
+    }
+
+    .table thead {
+        background-color: #333;
+    }
+
+    .dropdown-menu {
+        background-color: #2a2a2a;
+        border-color: #444;
+    }
+
+    .dropdown-item {
+        color: #e0e0e0;
+    }
+
+    .dropdown-item:hover {
+        background-color: #444;
+    }
+
+    .form-control,
+    .form-select {
+        background-color: #333;
+        border-color: #555;
+        color: #e0e0e0;
+    }
+
+    .form-control::placeholder {
+        color: #999;
+    }
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+/* Display utilities */
+.d-flex {
+    display: flex !important;
+}
+
+.flex-wrap {
+    flex-wrap: wrap !important;
+}
+
+.align-items-center {
+    align-items: center !important;
+}
+
+.justify-content-center {
+    justify-content: center !important;
+}
+
+.justify-content-between {
+    justify-content: space-between !important;
+}
+
+.align-content-stretch {
+    align-content: stretch !important;
+}
+
+/* Sizing utilities */
+.w-100 {
+    width: 100% !important;
+}
+
+.h-auto {
+    height: auto !important;
+}
+
+.mw-100 {
+    max-width: 100% !important;
+}
+
+/* Text utilities */
+.text-center {
+    text-align: center !important;
+}
+
+.text-start {
+    text-align: start !important;
+}
+
+.text-end {
+    text-align: end !important;
+}
+
+.text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.text-wrap {
+    white-space: normal !important;
+    word-wrap: break-word;
+}
+
+/* Overflow utilities */
+.overflow-auto {
+    overflow: auto;
+}
+
+.overflow-hidden {
+    overflow: hidden;
+}
+
+/* Visibility utilities */
+.visible {
+    visibility: visible !important;
+}
+
+.invisible {
+    visibility: hidden !important;
+}
+
+/* Position utilities */
+.position-relative {
+    position: relative !important;
+}
+
+.position-absolute {
+    position: absolute !important;
+}
+
+.position-fixed {
+    position: fixed !important;
+}
+
+.position-sticky {
+    position: sticky !important;
+}
+
+/* Z-index utilities */
+.z-1 {
+    z-index: 1;
+}
+
+.z-auto {
+    z-index: auto;
+}
+
+/* Border radius utilities */
+.rounded {
+    border-radius: 0.375rem !important;
+}
+
+.rounded-circle {
+    border-radius: 50% !important;
+}
+
+.rounded-0 {
+    border-radius: 0 !important;
+}
+
+/* Shadow utilities */
+.shadow {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+.shadow-sm {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+}
+
+.shadow-lg {
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1) !important;
+}
+
+.shadow-none {
+    box-shadow: none !important;
+}

@@ -1,0 +1,19 @@
+<div class="form-floating mb-3">
+    <input 
+        type="{{ type|default:'text' }}"
+        class="form-control {{ class }}"
+        id="{{ id }}"
+        name="{{ name }}"
+        placeholder="{{ placeholder }}"
+        {% if value %}value="{{ value }}"{% endif %}
+        {% if required %}required{% endif %}
+        {% if autocomplete %}autocomplete="{{ autocomplete }}"{% endif %}
+    >
+    <label for="{{ id }}">{{ label }}</label>
+    {% if error %}
+    <div class="invalid-feedback d-block">{{ error }}</div>
+    {% endif %}
+    {% if help_text %}
+    <small class="form-text text-muted">{{ help_text }}</small>
+    {% endif %}
+</div>

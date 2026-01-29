@@ -1,0 +1,335 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Responsive Design Demo - Attendance System{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="mb-5">
+        <h1 class="mb-3">
+            <i class="bi bi-phone"></i> Responsive Design Demo
+        </h1>
+        <p class="lead text-muted">Test the responsive layout by resizing your browser or using mobile device emulation.</p>
+        
+        <div class="alert alert-info">
+            <strong>Current Viewport:</strong> <span id="viewport-info" class="badge bg-primary">Loading...</span>
+            <span id="touch-info" class="badge bg-success ms-2">Loading...</span>
+        </div>
+    </div>
+
+    <!-- Responsive Grid Demo -->
+    <div class="mb-5">
+        <h2 class="mb-3">Responsive Grid</h2>
+        <p class="text-muted mb-3">1 column (mobile), 2 columns (tablet), 3 columns (desktop), 4 columns (large)</p>
+        
+        <div class="row g-3">
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <div class="h2 text-primary mb-2">📱</div>
+                        <h6>Mobile</h6>
+                        <p class="small text-muted">&lt; 576px</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <div class="h2 text-success mb-2">📱</div>
+                        <h6>Tablet</h6>
+                        <p class="small text-muted">576px - 991px</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <div class="h2 text-warning mb-2">🖥️</div>
+                        <h6>Desktop</h6>
+                        <p class="small text-muted">992px - 1199px</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <div class="h2 text-danger mb-2">🖥️</div>
+                        <h6>Large</h6>
+                        <p class="small text-muted">&gt; 1200px</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Typography Scaling Demo -->
+    <div class="mb-5">
+        <h2 class="mb-3">Responsive Typography</h2>
+        <p class="text-muted mb-3">Font sizes scale automatically based on screen size</p>
+        
+        <div class="card bg-light">
+            <div class="card-body">
+                <h1 class="mb-2">Heading 1 - Responsive</h1>
+                <p class="text-muted small">Base: 1.5rem (mobile) → 2rem (desktop)</p>
+                
+                <h2 class="mt-4 mb-2">Heading 2 - Responsive</h2>
+                <p class="text-muted small">Base: 1.25rem (mobile) → 1.625rem (desktop)</p>
+                
+                <h3 class="mt-4 mb-2">Heading 3 - Responsive</h3>
+                <p class="text-muted small">Base: 1.1rem (mobile) → 1.375rem (desktop)</p>
+                
+                <p class="mt-4 mb-0 text-muted small">Body text: 0.875rem (mobile) → 0.9375rem (desktop)</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Responsive Table Demo -->
+    <div class="mb-5">
+        <h2 class="mb-3">Responsive Table</h2>
+        <p class="text-muted mb-3">Stacks vertically on mobile, shows as normal table on desktop</p>
+        
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Student</th>
+                        <th>Course</th>
+                        <th>Attendance</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="Student">John Doe</td>
+                        <td data-label="Course">Mathematics</td>
+                        <td data-label="Attendance">92%</td>
+                        <td data-label="Status"><span class="badge bg-success">Present</span></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Student">Jane Smith</td>
+                        <td data-label="Course">Physics</td>
+                        <td data-label="Attendance">88%</td>
+                        <td data-label="Status"><span class="badge bg-warning">Late</span></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Student">Bob Johnson</td>
+                        <td data-label="Course">Chemistry</td>
+                        <td data-label="Attendance">75%</td>
+                        <td data-label="Status"><span class="badge bg-danger">Absent</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Responsive Form Demo -->
+    <div class="mb-5">
+        <h2 class="mb-3">Responsive Form</h2>
+        <p class="text-muted mb-3">Single column on mobile, multiple columns on larger screens</p>
+        
+        <form class="row g-3">
+            <div class="col-md-6">
+                <label class="form-label">First Name</label>
+                <input type="text" class="form-control" placeholder="John">
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Last Name</label>
+                <input type="text" class="form-control" placeholder="Doe">
+            </div>
+            <div class="col-md-8">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" placeholder="john@example.com">
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Role</label>
+                <select class="form-select">
+                    <option>Student</option>
+                    <option>Instructor</option>
+                    <option>Admin</option>
+                </select>
+            </div>
+            <div class="col-12">
+                <label class="form-label">Message</label>
+                <textarea class="form-control" rows="3" placeholder="Your message..."></textarea>
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Show/Hide by Device -->
+    <div class="mb-5">
+        <h2 class="mb-3">Conditional Visibility</h2>
+        <p class="text-muted mb-3">Elements show/hide based on screen size</p>
+        
+        <div class="show-mobile alert alert-info">
+            <i class="bi bi-phone"></i> This content is <strong>only visible on mobile</strong>
+        </div>
+        
+        <div class="show-tablet alert alert-success d-none">
+            <i class="bi bi-tablet"></i> This content is <strong>only visible on tablets</strong>
+        </div>
+        
+        <div class="show-desktop alert alert-warning d-none">
+            <i class="bi bi-monitor"></i> This content is <strong>only visible on desktops</strong>
+        </div>
+    </div>
+
+    <!-- Responsive Buttons -->
+    <div class="mb-5">
+        <h2 class="mb-3">Responsive Button Group</h2>
+        <p class="text-muted mb-3">Buttons wrap on mobile, stay inline on desktop</p>
+        
+        <div class="button-group">
+            <button class="btn btn-primary">
+                <i class="bi bi-plus-circle me-1"></i>Create
+            </button>
+            <button class="btn btn-secondary">
+                <i class="bi bi-pencil me-1"></i>Edit
+            </button>
+            <button class="btn btn-danger">
+                <i class="bi bi-trash me-1"></i>Delete
+            </button>
+            <button class="btn btn-outline-primary">
+                <i class="bi bi-arrow-left me-1"></i>Back
+            </button>
+        </div>
+    </div>
+
+    <!-- Responsive Cards -->
+    <div class="mb-5">
+        <h2 class="mb-3">Responsive Card Grid</h2>
+        <p class="text-muted mb-3">1 column (mobile), 2 columns (tablet), 3 columns (desktop)</p>
+        
+        <div class="card-grid card-grid-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <div class="h2 mb-2">📊</div>
+                    <h5>Analytics</h5>
+                    <p class="small text-muted">View detailed attendance statistics</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body text-center">
+                    <div class="h2 mb-2">👥</div>
+                    <h5>Students</h5>
+                    <p class="small text-muted">Manage student information</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body text-center">
+                    <div class="h2 mb-2">📚</div>
+                    <h5>Courses</h5>
+                    <p class="small text-muted">Organize your classes</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stat Cards -->
+    <div class="mb-5">
+        <h2 class="mb-3">Responsive Stat Cards</h2>
+        <p class="text-muted mb-3">Always appropriately sized for current screen</p>
+        
+        <div class="row g-3">
+            <div class="col-sm-6 col-lg-3">
+                <div class="stat-card">
+                    <div class="stat-icon text-primary">
+                        <i class="bi bi-people-fill fs-3"></i>
+                    </div>
+                    <div class="stat-value">245</div>
+                    <div class="stat-label">Total Students</div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="stat-card">
+                    <div class="stat-icon text-success">
+                        <i class="bi bi-book-fill fs-3"></i>
+                    </div>
+                    <div class="stat-value">18</div>
+                    <div class="stat-label">Courses</div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="stat-card">
+                    <div class="stat-icon text-warning">
+                        <i class="bi bi-calendar-event-fill fs-3"></i>
+                    </div>
+                    <div class="stat-value">92%</div>
+                    <div class="stat-label">Avg Attendance</div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="stat-card">
+                    <div class="stat-icon text-info">
+                        <i class="bi bi-clock-history fs-3"></i>
+                    </div>
+                    <div class="stat-value">156</div>
+                    <div class="stat-label">Sessions Today</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tips Card -->
+    <div class="card bg-light border-0 shadow-sm">
+        <div class="card-body">
+            <h5 class="card-title mb-3">
+                <i class="bi bi-lightbulb"></i> Testing Tips
+            </h5>
+            <ul class="list-unstyled mb-0">
+                <li class="mb-2">
+                    <strong>Browser Resize:</strong> Simply resize your browser window to see responsive changes
+                </li>
+                <li class="mb-2">
+                    <strong>DevTools:</strong> Press F12 → Click the device toggle icon to simulate different devices
+                </li>
+                <li class="mb-2">
+                    <strong>Mobile Device:</strong> Test on actual phone/tablet for best results
+                </li>
+                <li class="mb-2">
+                    <strong>Console:</strong> Use <code>ResponsiveManager.getCurrentBreakpoint()</code> to check current viewport
+                </li>
+                <li>
+                    <strong>Touch Test:</strong> Touch events optimized for 44px minimum touch targets
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+// Update viewport info
+function updateViewportInfo() {
+    const breakpoint = ResponsiveManager.getCurrentBreakpoint();
+    const isMobile = ResponsiveManager.isMobile();
+    const isTablet = ResponsiveManager.isTablet();
+    const isDesktop = ResponsiveManager.isDesktop();
+    const isTouchDevice = TouchHelper.isTouchDevice();
+    
+    const viewportEl = document.getElementById('viewport-info');
+    const touchEl = document.getElementById('touch-info');
+    
+    if (viewportEl) {
+        viewportEl.textContent = `${breakpoint.toUpperCase()} (${window.innerWidth}px) - ${isMobile ? 'Mobile' : isTablet ? 'Tablet' : 'Desktop'}`;
+    }
+    
+    if (touchEl) {
+        touchEl.textContent = isTouchDevice ? '✓ Touch Device' : 'No Touch';
+    }
+}
+
+// Update on load
+updateViewportInfo();
+
+// Update on resize
+window.addEventListener('resize', updateViewportInfo);
+
+// Update on breakpoint change
+window.addEventListener('breakpointchange', (e) => {
+    console.log('Breakpoint changed to:', e.detail.breakpoint);
+    updateViewportInfo();
+});
+</script>
+{% endblock %}

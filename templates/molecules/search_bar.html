@@ -1,0 +1,7 @@
+<form method="get" class="search-form {{ class }}">
+    <div class="input-group">
+        <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
+        <input type="text" name="search" class="form-control border-start-0" placeholder="Search by name or email..." value="{{ request.GET.search }}" data-tooltip="Enter search term">
+        {% include 'atoms/button.html' with text='Search' variant='primary' type='submit' icon='bi-magnifying-glass' %}
+    </div>
+</form>

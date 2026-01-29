@@ -1,0 +1,196 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Detailed Attendance Report{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h2 class="mb-0"><i class="bi bi-table me-2"></i>Detailed Attendance Report</h2>
+            <small class="text-muted">View and filter all attendance records</small>
+        </div>
+        <div class="col-md-4 text-end">
+            {% if total_records > 0 %}
+            <div class="btn-group btn-group-sm">
+                <a href="?{{ request.GET.urlencode }}&export=csv" class="btn btn-outline-secondary">
+                    <i class="bi bi-download me-1"></i>CSV
+                </a>
+                <a href="?{{ request.GET.urlencode }}&export=pdf" class="btn btn-outline-secondary">
+                    <i class="bi bi-file-pdf me-1"></i>PDF
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <!-- Filter Form -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0"><i class="bi bi-funnel me-2"></i>Filter Records</h5>
+        </div>
+        <div class="card-body">
+            <form method="get" class="row g-3">
+                <div class="col-md-3">
+                    <label for="course" class="form-label">Course</label>
+                    <select name="course" id="course" class="form-select">
+                        <option value="">All Courses</option>
+                        {% for course in courses %}
+                            <option value="{{ course.id }}" {% if filters.course_id|stringformat:"s" == course.id|stringformat:"s" %}selected{% endif %}>
+                                {{ course.code }} - {{ course.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="col-md-3">
+                    <label for="student" class="form-label">Student</label>
+                    <select name="student" id="student" class="form-select">
+                        <option value="">All Students</option>
+                        {% for student in students %}
+                            <option value="{{ student.id }}" {% if filters.student_id|stringformat:"s" == student.id|stringformat:"s" %}selected{% endif %}>
+                                {{ student.student_id }} - {{ student.first_name }} {{ student.last_name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="col-md-2">
+                    <label for="status" class="form-label">Status</label>
+                    <select name="status" id="status" class="form-select">
+                        <option value="">All Status</option>
+                        {% for value, label in status_choices %}
+                            <option value="{{ value }}" {% if filters.status == value %}selected{% endif %}>
+                                {{ label }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="col-md-2">
+                    <label for="date_from" class="form-label">From Date</label>
+                    <input type="date" name="date_from" id="date_from" class="form-control" value="{{ filters.date_from }}">
+                </div>
+                
+                <div class="col-md-2">
+                    <label for="date_to" class="form-label">To Date</label>
+                    <input type="date" name="date_to" id="date_to" class="form-control" value="{{ filters.date_to }}">
+                </div>
+                
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-search me-1"></i>Apply Filters
+                    </button>
+                    <a href="{% url 'detailed_attendance_report' %}" class="btn btn-secondary">
+                        <i class="bi bi-arrow-clockwise me-1"></i>Clear Filters
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Results Summary -->
+    <div class="alert alert-info mb-4">
+        <strong>{{ total_records }}</strong> record(s) found
+        {% if total_records > 50 %}
+            (showing {{ report|length }} per page)
+        {% endif %}
+    </div>
+    
+    <!-- Records Table -->
+    {% if report %}
+    <div class="card">
+        <div class="table-responsive">
+            <table class="table table-hover table-sm mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Student ID</th>
+                        <th>Student Name</th>
+                        <th>Email</th>
+                        <th>Course</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Status</th>
+                        <th>Remarks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in report %}
+                    <tr>
+                        <td><strong>{{ record.student_id }}</strong></td>
+                        <td>{{ record.student_name }}</td>
+                        <td><small>{{ record.email }}</small></td>
+                        <td>
+                            <small>{{ record.course_code }}</small>
+                            <br>
+                            <small class="text-muted">{{ record.course_name }}</small>
+                        </td>
+                        <td>{{ record.session_date|date:'M d, Y' }}</td>
+                        <td><small>{{ record.session_time }}</small></td>
+                        <td>
+                            {% if record.status == 'present' %}
+                                <span class="badge bg-success">Present</span>
+                            {% elif record.status == 'absent' %}
+                                <span class="badge bg-danger">Absent</span>
+                            {% elif record.status == 'late' %}
+                                <span class="badge bg-warning">Late</span>
+                            {% elif record.status == 'excused' %}
+                                <span class="badge bg-info">Excused</span>
+                            {% endif %}
+                        </td>
+                        <td><small>{{ record.remarks }}</small></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <!-- Pagination -->
+    {% if report.has_other_pages %}
+    <nav class="mt-4">
+        <ul class="pagination justify-content-center">
+            {% if report.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">First</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ report.previous_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">Previous</a>
+                </li>
+            {% endif %}
+            
+            {% for num in report.paginator.page_range %}
+                {% if report.number == num %}
+                    <li class="page-item active">
+                        <span class="page-link">{{ num }}</span>
+                    </li>
+                {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ num }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">{{ num }}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+            
+            {% if report.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ report.next_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">Next</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ report.paginator.num_pages }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">Last</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+    
+    {% else %}
+    <div class="card text-center py-5">
+        <div class="card-body">
+            <i class="bi bi-inbox fs-1" style="color: #ccc;"></i>
+            <h5 class="mt-3 mb-2">No Records Found</h5>
+            <p class="text-muted mb-0">No attendance records match your filter criteria.</p>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

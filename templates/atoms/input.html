@@ -1,0 +1,28 @@
+<div class="form-group {{ wrapper_class }}">
+    {% if label %}
+    <label for="{{ id|default:name }}" class="form-label">
+        {{ label }}{% if required %} <span class="text-danger">*</span>{% endif %}
+    </label>
+    {% endif %}
+
+    <input
+        type="{{ type|default:'text' }}"
+        name="{{ name }}"
+        id="{{ id|default:name }}"
+        class="form-control {{ class }} {% if error %}is-invalid{% endif %}"
+        placeholder="{{ placeholder|default:'' }}"
+        {% if value is not none %}value="{{ value }}"{% endif %}
+        {% if autocomplete %}autocomplete="{{ autocomplete }}"{% endif %}
+        {% if tooltip %}data-tooltip="{{ tooltip }}"{% endif %}
+        aria-label="{{ aria_label|default:placeholder|default:name }}"
+        {% if required %}required{% endif %}
+    />
+
+    {% if help_text %}
+    <small class="form-text text-muted">{{ help_text }}</small>
+    {% endif %}
+
+    {% if error %}
+    <div class="invalid-feedback d-block">{{ error }}</div>
+    {% endif %}
+</div>

@@ -1,0 +1,266 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome - Attendance System{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div style="max-width: 900px; margin: 2rem auto;">
+        <!-- Header -->
+        <div class="card mb-4" style="background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%); color: white;">
+            <div class="card-body p-5">
+                <h1 style="color: white; margin: 0 0 0.5rem 0;">
+                    <i class="bi bi-building me-2"></i>Welcome to School Attendance Tracker
+                </h1>
+                <p class="lead mb-0">Track student attendance across all classes and generate comprehensive reports</p>
+            </div>
+        </div>
+
+        <!-- Role-based Quick Start -->
+        {% if user.profile.role == 'student' %}
+        <div class="alert alert-info mb-4">
+            <h5 class="alert-heading">
+                <i class="bi bi-info-circle me-2"></i>Student Overview
+            </h5>
+            <p>As a student, you can view your enrolled courses, check attendance records, and monitor your attendance statistics.</p>
+        </div>
+        
+        <div class="row mb-4">
+            <div class="col-md-6 mb-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <i class="bi bi-book" style="color: var(--secondary-color); font-size: 1.5rem;"></i> My Courses
+                        </h5>
+                        <p class="card-text">View all your enrolled courses and their details.</p>
+                        <a href="{% url 'course_list' %}" class="btn btn-secondary btn-sm">View Courses</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <i class="bi bi-graph-up" style="color: var(--success-color); font-size: 1.5rem;"></i> My Attendance
+                        </h5>
+                        <p class="card-text">Check your attendance records and overall attendance rate.</p>
+                        <a href="{% url 'dashboard' %}" class="btn btn-success btn-sm">View Dashboard</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% elif user.profile.role == 'instructor' %}
+        <div class="alert alert-info mb-4">
+            <h5 class="alert-heading">
+                <i class="bi bi-info-circle me-2"></i>Instructor Overview
+            </h5>
+            <p>As an instructor, you manage courses, create attendance sessions, mark student attendance, and generate reports.</p>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <i class="bi bi-plus-circle" style="color: var(--primary-color); font-size: 1.5rem;"></i> Create Course
+                        </h5>
+                        <p class="card-text text-sm">Create a new course and set capacity, credits, and semester.</p>
+                        <a href="{% url 'course_create' %}" class="btn btn-primary btn-sm">+ Add Course</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <i class="bi bi-calendar-event" style="color: var(--warning-color); font-size: 1.5rem;"></i> Mark Attendance
+                        </h5>
+                        <p class="card-text text-sm">Create sessions and mark student attendance per session.</p>
+                        <a href="{% url 'course_list' %}" class="btn btn-warning btn-sm">Go to Courses</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <i class="bi bi-file-earmark-chart" style="color: var(--info-color); font-size: 1.5rem;"></i> View Reports
+                        </h5>
+                        <p class="card-text text-sm">Generate attendance reports filtered by date and course.</p>
+                        <a href="{% url 'attendance_report' %}" class="btn btn-info btn-sm">Reports</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% else %}
+        <!-- Admin Overview -->
+        <div class="alert alert-info mb-4">
+            <h5 class="alert-heading">
+                <i class="bi bi-info-circle me-2"></i>Admin Overview
+            </h5>
+            <p>As an administrator, you have full access to manage users, courses, students, and system-wide reports.</p>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-3 mb-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <i class="bi bi-people" style="color: var(--primary-color); font-size: 1.5rem;"></i> Manage Users
+                        </h5>
+                        <p class="card-text text-sm">Create users and assign roles (admin, instructor, student).</p>
+                        <a href="/admin/" class="btn btn-primary btn-sm">Admin Panel</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <i class="bi bi-book" style="color: var(--secondary-color); font-size: 1.5rem;"></i> Manage Courses
+                        </h5>
+                        <p class="card-text text-sm">Create and manage all courses in the system.</p>
+                        <a href="{% url 'course_list' %}" class="btn btn-secondary btn-sm">Courses</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <i class="bi bi-person-check" style="color: var(--success-color); font-size: 1.5rem;"></i> Students
+                        </h5>
+                        <p class="card-text text-sm">View and manage all students in the system.</p>
+                        <a href="{% url 'student_list' %}" class="btn btn-success btn-sm">Students</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <i class="bi bi-speedometer2" style="color: var(--info-color); font-size: 1.5rem;"></i> Dashboard
+                        </h5>
+                        <p class="card-text text-sm">View system-wide statistics and analytics.</p>
+                        <a href="{% url 'admin_dashboard' %}" class="btn btn-info btn-sm">Dashboard</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Getting Started Guide -->
+        <div class="card mb-4">
+            <div class="card-header bg-light">
+                <h4 class="card-title mb-0">
+                    <i class="bi bi-question-circle me-2"></i>Getting Started Guide
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="mb-3">First Steps</h5>
+                        <ol class="ps-3">
+                            <li class="mb-2"><strong>Update Your Profile</strong> — Click your name in the top right and complete your profile with avatar and contact info</li>
+                            <li class="mb-2"><strong>Browse Content</strong> — Explore courses, students, and available features from the navigation menu</li>
+                            <li class="mb-2"><strong>Check Dashboard</strong> — View your personalized dashboard with key statistics</li>
+                            {% if user.profile.role != 'student' %}
+                            <li class="mb-2"><strong>Create Resources</strong> — Add courses, sessions, or manage attendance</li>
+                            {% endif %}
+                        </ol>
+                    </div>
+                    <div class="col-md-6">
+                        <h5 class="mb-3">Key Features</h5>
+                        <ul class="ps-3">
+                            <li class="mb-2">
+                                <strong>📊 Real-time Tracking</strong> — Mark and track attendance instantly
+                            </li>
+                            <li class="mb-2">
+                                <strong>📈 Analytics</strong> — View detailed attendance statistics by course and student
+                            </li>
+                            <li class="mb-2">
+                                <strong>🔍 Search & Filter</strong> — Easily find courses, students, and records
+                            </li>
+                            <li class="mb-2">
+                                <strong>📋 Reports</strong> — Generate comprehensive attendance reports
+                            </li>
+                            <li class="mb-2">
+                                <strong>👥 Role-based Access</strong> — Different features for different user roles
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Cheat Sheet -->
+        <div class="card">
+            <div class="card-header bg-light">
+                <h4 class="card-title mb-0">
+                    <i class="bi bi-map me-2"></i>Navigation Cheat Sheet
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Page</th>
+                                <th>What You Can Do</th>
+                                <th>Access</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Dashboard</strong></td>
+                                <td>View personal stats and quick overview</td>
+                                <td>Everyone</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Courses</strong></td>
+                                <td>Browse all courses, view enrollments</td>
+                                <td>Everyone</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Students</strong></td>
+                                <td>Search students, view profiles</td>
+                                <td>Instructor, Admin</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Attendance Report</strong></td>
+                                <td>Filter and view attendance records</td>
+                                <td>Instructor, Admin</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Admin Dashboard</strong></td>
+                                <td>System-wide analytics and statistics</td>
+                                <td>Admin only</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Admin Panel</strong></td>
+                                <td>Manage all users, courses, and data</td>
+                                <td>Admin only</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Help Section -->
+        <div class="alert alert-light mt-4 border">
+            <h5 class="alert-heading">
+                <i class="bi bi-question-lg me-2"></i>Need Help?
+            </h5>
+            <p class="mb-2">Check the inline help text in forms and pages for more guidance. Hover over labels for tooltips.</p>
+            <p class="mb-0">
+                <a href="{% url 'help' %}" class="btn btn-sm btn-outline-primary">
+                    <i class="bi bi-book me-1"></i>View Full Help Documentation
+                </a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

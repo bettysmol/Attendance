@@ -1,0 +1,44 @@
+<div class="profile-card {{ class }}">
+    <div class="card shadow-sm">
+        <div class="card-body text-center p-4">
+            {% include 'molecules/user_avatar.html' with user=user size='avatar-lg' class='mx-auto mb-3' %}
+            
+            <h4 class="mb-1">{{ user.get_full_name }}</h4>
+            <p class="text-muted mb-2">@{{ user.username }}</p>
+            
+            {% include 'atoms/badge.html' with text=user.profile.get_role_display color='primary' %}
+            
+            <hr class="my-3">
+            
+            <div class="profile-info text-start">
+                <div class="mb-2">
+                    <i class="bi bi-envelope me-2 text-muted"></i>
+                    <span>{{ user.email }}</span>
+                </div>
+                {% if user.profile.phone %}
+                <div class="mb-2">
+                    <i class="bi bi-telephone me-2 text-muted"></i>
+                    <span>{{ user.profile.phone }}</span>
+                </div>
+                {% endif %}
+                <div class="mb-2">
+                    <i class="bi bi-calendar me-2 text-muted"></i>
+                    <span>Joined {{ user.date_joined|date:"M d, Y" }}</span>
+                </div>
+            </div>
+            
+            {% if student_data %}
+            <hr class="my-3">
+            <div class="attendance-summary">
+                <h6 class="text-muted mb-2">Attendance Rate</h6>
+                <div class="progress mb-2" style="height: 25px;">
+                    <div class="progress-bar bg-success" style="width: {{ student_data.attendance_rate }}%">
+                        {{ student_data.attendance_rate }}%
+                    </div>
+                </div>
+                <small class="text-muted">{{ student_data.total_attendances }} total sessions</small>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

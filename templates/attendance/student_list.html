@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Students - Attendance System{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="mb-4">Students</h2>
+    {% include 'organisms/student_list.html' with students=students %}
+</div>
+{% endblock %}

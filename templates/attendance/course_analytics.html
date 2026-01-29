@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Course Analytics - {{ course.code }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h2 class="mb-0"><i class="bi bi-graph-up me-2"></i>{{ course.code }} Analytics</h2>
+            <small class="text-muted">{{ course.name }}</small>
+        </div>
+        <div class="col-md-4 text-end">
+            <a href="{% url 'course_detail' course.id %}" class="btn btn-sm btn-outline-secondary">
+                <i class="bi bi-arrow-left me-1"></i>Back to Course
+            </a>
+        </div>
+    </div>
+    
+    <!-- Summary Cards -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h3 class="card-title text-primary">{{ analytics.total_sessions }}</h3>
+                    <p class="card-text text-muted mb-0">Total Sessions</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h3 class="card-title text-success">{{ analytics.average_attendance|floatformat:1 }}%</h3>
+                    <p class="card-text text-muted mb-0">Average Attendance</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h3 class="card-title text-info">{{ analytics.total_students }}</h3>
+                    <p class="card-text text-muted mb-0">Enrolled Students</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h3 class="card-title text-warning">{{ analytics.enrollment_percentage|floatformat:1 }}%</h3>
+                    <p class="card-text text-muted mb-0">Enrollment Rate</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Attendance Trend Chart -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0"><i class="bi bi-graph-up me-2"></i>Attendance Trends (Last 30 Days)</h5>
+        </div>
+        <div class="card-body">
+            {% if trends %}
+            <div class="table-responsive">
+                <table class="table table-sm">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Date</th>
+                            <th>Session</th>
+                            <th>Present</th>
+                            <th>Absent</th>
+                            <th>Late</th>
+                            <th>Excused</th>
+                            <th>Rate</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for trend in trends %}
+                        <tr>
+                            <td><strong>{{ trend.date|date:'M d, Y' }}</strong></td>
+                            <td>
+                                <a href="{% url 'session_detail' trend.session.id %}" class="text-decoration-none">
+                                    {{ trend.session.start_time|time:'H:i' }}
+                                </a>
+                            </td>
+                            <td>
+                                <span class="badge bg-success">{{ trend.stats.present }}</span>
+                            </td>
+                            <td>
+                                <span class="badge bg-danger">{{ trend.stats.absent }}</span>
+                            </td>
+                            <td>
+                                <span class="badge bg-warning">{{ trend.stats.late }}</span>
+                            </td>
+                            <td>
+                                <span class="badge bg-info">{{ trend.stats.excused }}</span>
+                            </td>
+                            <td>
+                                {% if trend.stats.total > 0 %}
+                                    <strong>{{ trend.stats.present_pct }}%</strong>
+                                {% else %}
+                                    <span class="text-muted">—</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p class="text-muted mb-0">No sessions with attendance data in the last 30 days.</p>
+            {% endif %}
+        </div>
+    </div>
+    
+    <!-- Student Attendance Breakdown -->
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0"><i class="bi bi-people me-2"></i>Student Attendance Summary</h5>
+        </div>
+        <div class="card-body">
+            {% if student_analytics %}
+            <div class="table-responsive">
+                <table class="table table-hover table-sm">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Student</th>
+                            <th class="text-center">Present</th>
+                            <th class="text-center">Absent</th>
+                            <th class="text-center">Late</th>
+                            <th class="text-center">Excused</th>
+                            <th class="text-center">Rate</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in student_analytics %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'student_detail' item.student.id %}" class="text-decoration-none">
+                                    {{ item.student.first_name }} {{ item.student.last_name }}
+                                </a>
+                                <br>
+                                <small class="text-muted">{{ item.student.student_id }}</small>
+                            </td>
+                            <td class="text-center">
+                                <span class="badge bg-success">{{ item.analytics.present }}</span>
+                            </td>
+                            <td class="text-center">
+                                <span class="badge bg-danger">{{ item.analytics.absent }}</span>
+                            </td>
+                            <td class="text-center">
+                                <span class="badge bg-warning">{{ item.analytics.late }}</span>
+                            </td>
+                            <td class="text-center">
+                                <span class="badge bg-info">{{ item.analytics.excused }}</span>
+                            </td>
+                            <td class="text-center">
+                                <strong>{{ item.analytics.attendance_rate|floatformat:1 }}%</strong>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p class="text-muted mb-0">No students enrolled in this course.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

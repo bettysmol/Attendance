@@ -1,0 +1,246 @@
+/* ========== ANIMATIONS ========== */
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes successCheckmark {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ========== AUTHENTICATION STYLES ========== */
+.auth-wrapper {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* Ensure the auth area has breathing room so cards are fully visible */
+.auth-wrapper {
+    padding: 3rem 0;
+}
+
+/* Avatars */
+.avatar-sm {
+    width: 35px;
+    height: 35px;
+    font-size: 0.875rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.avatar-md {
+    width: 80px;
+    height: 80px;
+    font-size: 1.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.avatar-lg {
+    width: 120px;
+    height: 120px;
+    font-size: 2rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.avatar-placeholder {
+    font-weight: bold;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+/* ========== PROFILE & CARD STYLES ========== */
+.profile-card .card {
+    border: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.form-floating > label {
+    color: #6c757d;
+}
+
+.form-control:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+/* ========== BUTTON STYLES ========== */
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    font-weight: 500;
+    padding: 0.75rem 1.25rem;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #5568d3 0%, #65408b 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.btn-primary:active {
+    animation: successCheckmark 0.4s ease;
+}
+
+.btn-primary i {
+    margin-right: 0.5rem;
+}
+
+/* Success Button */
+.btn-success {
+    background-color: #28a745;
+    border: none;
+    font-weight: 500;
+    padding: 0.75rem 1.25rem;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+}
+
+/* ========== FORM STYLES - COMPACT ========== */
+.form-floating {
+    margin-bottom: 1rem;
+}
+
+.form-floating > .form-control {
+    padding: 0.875rem 0.75rem;
+    font-size: 1rem;
+}
+
+.form-floating > label {
+    padding: 0.625rem 0.75rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+/* ========== LOGIN/REGISTER CARDS ========== */
+.login-form-container .card,
+.register-form-container .card {
+    animation: slideUp 0.5s ease-out;
+    border: none;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    border-radius: 0.5rem;
+}
+
+.login-form-container .card-header,
+.register-form-container .card-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 1.5rem;
+    border-radius: 0.5rem 0.5rem 0 0;
+}
+
+/* If a template adds `bg-light` to the header, override it for login/register cards */
+.login-form-container .card-header.bg-light,
+.register-form-container .card-header.bg-light {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    color: white !important;
+}
+
+/* Ensure the card content isn't clipped */
+.login-form-container .card,
+.register-form-container .card {
+    overflow: visible;
+}
+
+/* Make the subtitle readable on gradient header */
+.login-form-container .card-header .text-muted,
+.register-form-container .card-header .text-muted {
+    color: rgba(255,255,255,0.92) !important;
+    opacity: 1 !important;
+}
+
+/* Ensure header title is clearly white */
+.login-form-container .card-header h2,
+.register-form-container .card-header h2 {
+    color: #ffffff !important;
+}
+
+.login-form-container .card-body,
+.register-form-container .card-body {
+    padding: 1.75rem;
+}
+
+.auth-link {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.95rem;
+}
+
+.auth-link a {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.auth-link a:hover {
+    color: #5568d3;
+    text-decoration: underline;
+}
+
+/* ========== SUCCESS MESSAGE ========== */
+.alert-success {
+    animation: slideUp 0.4s ease-out;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+}
+
+.alert-success i {
+    animation: successCheckmark 0.5s ease-out;
+    margin-right: 0.5rem;
+}
+
+/* ========== VISUAL HIERARCHY ========== */
+.text-muted {
+    font-size: 0.9rem;
+}
+
+.small {
+    font-size: 0.85rem;
+}
+
+/* Password Reset */
+.password-reset-container {
+    max-width: 500px;
+    margin: 2rem auto;
+}
+
+.password-reset-container .card {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}

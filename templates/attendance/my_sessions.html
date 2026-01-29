@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container mt-5 mb-5">
+    <h2 class="mb-4"><i class="bi bi-clock-history me-2"></i>My Sessions</h2>
+    {% if sessions %}
+        <div class="row">
+            {% for session in sessions %}
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 shadow-sm" style="border: none; overflow: hidden;">
+                        <!-- Session Header -->
+                        <div class="card-header" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 1.25rem; border: none;">
+                            <h6 class="mb-1 fw-bold">{{ session.course.name }}</h6>
+                            <small>{{ session.course.code }}</small>
+                        </div>
+                        
+                        <!-- Session Body -->
+                        <div class="card-body">
+                            <!-- Date & Time -->
+                            <div class="mb-3 d-flex align-items-center gap-2">
+                                <i class="bi bi-calendar-event" style="color: #667eea;"></i>
+                                <div>
+                                    <small class="text-muted d-block">{{ session.date|date:'l, F j' }}</small>
+                                    <strong>{{ session.start_time|time:'H:i' }} – {{ session.end_time|time:'H:i' }}</strong>
+                                </div>
+                            </div>
+                            
+                            <!-- Countdown Timer -->
+                            {% if session.is_open %}
+                            <div class="mb-3 p-2 bg-light rounded" style="border-left: 4px solid #667eea;">
+                                <small class="text-muted d-block">Time remaining:</small>
+                                <div class="countdown-timer fw-bold" data-end-time="{{ session.end_time|time:'H:i' }}" data-session-date="{{ session.date|date:'Y-m-d' }}" style="color: #667eea; font-size: 1.1em;">
+                                    <i class="bi bi-hourglass-split me-1"></i><span class="timer-text">calculating...</span>
+                                </div>
+                            </div>
+                            {% endif %}
+                            
+                            <!-- Status Badge -->
+                            <div class="mb-3">
+                                {% if session.is_open %}
+                                    <span class="badge bg-success">
+                                        <i class="bi bi-check-circle me-1"></i>Open for Check-In
+                                    </span>
+                                {% else %}
+                                    <span class="badge bg-secondary">
+                                        <i class="bi bi-x-circle me-1"></i>Closed
+                                    </span>
+                                {% endif %}
+                                {% if session.checked_in %}
+                                    <span class="badge bg-info ms-2">
+                                        <i class="bi bi-person-check me-1"></i>Checked In
+                                    </span>
+                                {% endif %}
+                            </div>
+                            
+                            <!-- Check-In Section -->
+                            {% if session.is_open and not session.checked_in %}
+                                <form method="post" action="{% url 'student_checkin' session.id %}" class="d-flex flex-column gap-2">
+                                    {% csrf_token %}
+                                    {% if session.checkin_code %}
+                                        <input type="text" name="checkin_code" class="form-control form-control-sm" placeholder="Enter code" required />
+                                    {% endif %}
+                                    <button type="submit" class="btn btn-success btn-sm w-100">
+                                        <i class="bi bi-check-circle me-1"></i>Check In Now
+                                    </button>
+                                </form>
+                            {% elif session.checked_in %}
+                                <div class="alert alert-success mb-0 py-2">
+                                    <i class="bi bi-check-circle me-1"></i>
+                                    <small><strong>You've checked in for this session</strong></small>
+                                </div>
+                            {% else %}
+                                <button class="btn btn-secondary btn-sm w-100" disabled>
+                                    <i class="bi bi-clock-history me-1"></i>Check-In Closed
+                                </button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="card text-center py-5">
+            <div class="card-body">
+                <i class="bi bi-inbox fs-1" style="color: #ccc;"></i>
+                <h5 class="mt-3 mb-2">No Active Sessions</h5>
+                <p class="text-muted mb-0">There are no open sessions available for check-in right now.</p>
+                <small class="text-muted d-block mt-2">Check back later or contact your instructor.</small>
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+<style>
+    .card {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 16px rgba(0,0,0,0.15) !important;
+    }
+    
+    .countdown-timer {
+        font-family: 'Courier New', monospace;
+    }
+    
+    .timer-critical {
+        color: #dc3545 !important;
+        animation: pulse 1s infinite;
+    }
+    
+    @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.7; }
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const countdownElements = document.querySelectorAll('.countdown-timer');
+    
+    function updateCountdowns() {
+        countdownElements.forEach(el => {
+            const endTimeStr = el.getAttribute('data-end-time'); // "HH:MM"
+            const sessionDateStr = el.getAttribute('data-session-date'); // "YYYY-MM-DD"
+            
+            const [hours, minutes] = endTimeStr.split(':').map(Number);
+            const endDateTime = new Date(sessionDateStr);
+            endDateTime.setHours(hours, minutes, 0, 0);
+            
+            const now = new Date();
+            const diffMs = endDateTime - now;
+            
+            if (diffMs <= 0) {
+                el.querySelector('.timer-text').textContent = 'Time\'s up';
+                el.classList.add('timer-critical');
+            } else {
+                const totalSeconds = Math.floor(diffMs / 1000);
+                const mins = Math.floor(totalSeconds / 60);
+                const secs = totalSeconds % 60;
+                const timerText = `${mins}m ${secs}s`;
+                el.querySelector('.timer-text').textContent = timerText;
+                
+                // Add critical styling if less than 5 minutes
+                if (mins < 5) {
+                    el.classList.add('timer-critical');
+                } else {
+                    el.classList.remove('timer-critical');
+                }
+            }
+        });
+    }
+    
+    // Update immediately and then every second
+    updateCountdowns();
+    setInterval(updateCountdowns, 1000);
+});
+</script>
+{% endblock %}

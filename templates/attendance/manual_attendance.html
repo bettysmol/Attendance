@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container my-4">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h2 class="mb-1"><i class="bi bi-clipboard-check me-2"></i>Manual Attendance</h2>
+            <small class="text-muted">{{ session.course.code }} - {{ session.course.name }} | {{ session.date|date:'F j, Y' }}</small>
+        </div>
+        <div class="col-md-4 text-end">
+            <a href="{% url 'session_detail' session.id %}" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left me-1"></i>Back to Session
+            </a>
+        </div>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="mb-3">
+        <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-search"></i></span>
+            <input type="text" id="studentSearch" class="form-control" placeholder="Search by name or student ID..." aria-label="Search students">
+            <button class="btn btn-outline-secondary" type="button" id="clearSearch">
+                <i class="bi bi-x"></i>
+            </button>
+        </div>
+        <small class="text-muted d-block mt-2">Results: <span id="resultCount">{{ students|length }}</span> student(s)</small>
+    </div>
+
+    <form method="post" class="card shadow-sm" style="border: none;">
+        {% csrf_token %}
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table mb-0 table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th style="width: 20%;">Student ID</th>
+                            <th style="width: 30%;">Name</th>
+                            <th style="width: 25%;">Status</th>
+                            <th style="width: 25%;">Remarks</th>
+                        </tr>
+                    </thead>
+                    <tbody id="studentTable">
+                        {% for student in students %}
+                        <tr>
+                            <td class="fw-bold">{{ student.student_id }}</td>
+                            <td>{{ student.first_name }} {{ student.last_name }}</td>
+                            <td class="position-relative">
+                                <div class="d-flex align-items-center gap-2">
+                                    <select name="status_{{ student.id }}" class="form-select form-select-sm" style="max-width: 140px;">
+                                        <option value="present" {% if student.attendance_status == 'present' %}selected{% endif %}>Present</option>
+                                        <option value="absent" {% if student.attendance_status == 'absent' %}selected{% endif %}>Absent</option>
+                                        <option value="late" {% if student.attendance_status == 'late' %}selected{% endif %}>Late</option>
+                                        <option value="excused" {% if student.attendance_status == 'excused' %}selected{% endif %}>Excused</option>
+                                    </select>
+                                    <button type="button" class="btn btn-success btn-sm quick-present" data-student="{{ student.id }}" title="Quick mark present">
+                                        <i class="bi bi-check-circle"></i>
+                                    </button>
+                                </div>
+                            </td>
+                            <td>
+                                <input type="text" name="remarks_{{ student.id }}" class="form-control form-control-sm" placeholder="Notes..." value="{{ student.attendance_remarks|default:'' }}">
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer bg-light d-flex justify-content-between">
+            <a href="{% url 'session_detail' session.id %}" class="btn btn-secondary">
+                <i class="bi bi-arrow-left me-1"></i>Back
+            </a>
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-save me-1"></i>Save Attendance
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+// Student search and filter functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('studentSearch');
+    const clearBtn = document.getElementById('clearSearch');
+    const resultCount = document.getElementById('resultCount');
+    const studentRows = Array.from(document.querySelectorAll('tbody tr'));
+    
+    function filterStudents() {
+        const query = searchInput.value.toLowerCase().trim();
+        let visibleCount = 0;
+        
+        studentRows.forEach(row => {
+            const studentId = row.querySelector('td:nth-child(1)').textContent.toLowerCase();
+            const name = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+            
+            if (query === '' || studentId.includes(query) || name.includes(query)) {
+                row.style.display = '';
+                visibleCount++;
+            } else {
+                row.style.display = 'none';
+            }
+        });
+        
+        resultCount.textContent = visibleCount;
+        
+        // Show "no results" message
+        const tbody = document.querySelector('tbody');
+        let noResults = document.getElementById('noResults');
+        if (visibleCount === 0 && !noResults) {
+            noResults = document.createElement('tr');
+            noResults.id = 'noResults';
+            noResults.innerHTML = '<td colspan="4" class="text-center text-muted py-4">No students match your search</td>';
+            tbody.appendChild(noResults);
+        } else if (visibleCount > 0 && noResults) {
+            noResults.remove();
+        }
+    }
+    
+    searchInput.addEventListener('input', filterStudents);
+    clearBtn.addEventListener('click', function() {
+        searchInput.value = '';
+        searchInput.focus();
+        filterStudents();
+    });
+    
+    // Quick present button functionality
+    document.querySelectorAll('.quick-present').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var studentId = btn.getAttribute('data-student');
+            var select = document.querySelector('select[name="status_' + studentId + '"]');
+            if (select) {
+                select.value = 'present';
+                select.classList.add('is-valid');
+                select.style.borderColor = '#28a745';
+                setTimeout(function() {
+                    select.classList.remove('is-valid');
+                    select.style.borderColor = '';
+                }, 800);
+            }
+        });
+    });
+});
+</script>
+
+<style>
+    .table tbody tr:hover {
+        background-color: #f8f9fa;
+    }
+    .quick-present {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.875rem;
+    }
+    #studentSearch {
+        padding: 0.75rem 0.75rem;
+        font-size: 0.95rem;
+    }
+</style>
+{% endblock %}

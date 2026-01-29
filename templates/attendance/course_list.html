@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block title %}Courses - Attendance System{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h1 class="mb-1">
+                    <i class="bi bi-book-fill" style="color: var(--secondary-color);"></i> Classes
+                </h1>
+                <p class="text-muted mb-0 small">Manage and view all available classes</p>
+            </div>
+            {% if user.profile.role == 'admin' or user.profile.role == 'instructor' %}
+            <a href="{% url 'course_create' %}" class="btn btn-primary">
+                <i class="bi bi-plus-circle me-1"></i>Add New Class
+            </a>
+            {% endif %}
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-body p-3">
+                {% include 'molecules/search_bar.html' with placeholder='Search classes...' %}
+            </div>
+        </div>
+
+        {% if courses %}
+        <div class="alert alert-info mb-3">
+            <i class="bi bi-info-circle me-2"></i>
+            <strong>{{ courses|length }} class{{ courses|length|pluralize }} found</strong>
+        </div>
+        
+        <div class="row g-3">
+            {% for course in courses %}
+            <div class="col-md-6 col-lg-4">
+                <a href="{% url 'course_detail' course.id %}" class="text-decoration-none">
+                    <div class="card h-100">
+                        <div class="card-header">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h6 class="card-title mb-1" style="font-size: 1rem;">
+                                        <i class="bi bi-book me-1" style="color: var(--secondary-color);"></i>{{ course.code }}
+                                    </h6>
+                                    <p class="card-subtitle text-muted mb-0" style="font-size: 0.875rem;">{{ course.name }}</p>
+                                </div>
+                                <span class="badge badge-primary">{{ course.semester }} Sem</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <p class="small text-muted mb-2">{{ course.description|truncatewords:12 }}</p>
+                            
+                            <div class="mb-2">
+                                <div class="d-flex justify-content-between align-items-center mb-1" style="font-size: 0.8125rem;">
+                                    <small class="text-muted">Enrollment</small>
+                                    <small>{{ course.students.count }}/{{ course.capacity }}</small>
+                                </div>
+                                <div class="progress">
+                                    {% widthratio course.students.count course.capacity 100 as enrollment_pct %}
+                                    <div class="progress-bar bg-success" style="width: {{ enrollment_pct }}%;"></div>
+                                </div>
+                            </div>
+
+                            <div class="border-top pt-2" style="font-size: 0.875rem;">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <small class="text-muted"><i class="bi bi-star me-1"></i>Credits</small>
+                                    <strong>{{ course.credits }}</strong>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <small class="text-muted"><i class="bi bi-people me-1"></i>Students</small>
+                                    <strong>{{ course.students.count }}</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer" style="background-color: var(--gray-50); text-align: center;">
+                            <small class="text-primary fw-bold">View Details →</small>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+        
+        {% if courses.has_other_pages %}
+        <nav aria-label="Page navigation" class="mt-4">
+            <ul class="pagination justify-content-center">
+                {% if courses.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page=1">First</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ courses.previous_page_number }}">Previous</a></li>
+                {% endif %}
+                
+                <li class="page-item disabled"><span class="page-link">Page {{ courses.number }} of {{ courses.paginator.num_pages }}</span></li>
+                
+                {% if courses.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ courses.next_page_number }}">Next</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ courses.paginator.num_pages }}">Last</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+        
+        {% else %}
+        <div class="card">
+            <div class="empty-state">
+                <div class="empty-state-icon"><i class="bi bi-inbox"></i></div>
+                <div class="empty-state-text mt-3">No Classes Found</div>
+                <div class="empty-state-hint mt-2">
+                    {% if user.profile.role == 'student' %}
+                        You're not enrolled in any classes yet. Ask your instructor to add you!
+                    {% elif user.profile.role == 'instructor' %}
+                        You haven't created any classes yet.
+                    {% else %}
+                        No classes in the system yet.
+                    {% endif %}
+                </div>
+                {% if user.profile.role != 'student' %}
+                <a href="{% url 'course_create' %}" class="btn btn-primary btn-sm mt-3">
+                    <i class="bi bi-plus-circle me-1"></i>Create Your First Class
+                </a>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+

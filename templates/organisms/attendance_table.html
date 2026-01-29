@@ -1,0 +1,53 @@
+<div class="attendance-table-container {{ class }}">
+    <div class="card">
+        <div class="card-header">
+            <h5><i class="bi bi-calendar-check me-2"></i>Attendance Sheet - {{ session.course.name }}</h5>
+            <small class="text-muted"><i class="bi bi-calendar-event me-1"></i>{{ session.date }} | <i class="bi bi-clock me-1"></i>{{ session.start_time }} - {{ session.end_time }}</small>
+        </div>
+        <div class="card-body">
+            <form method="post" action="{% url 'mark_attendance' session.id %}">
+                {% csrf_token %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th><i class="bi bi-hash me-1"></i>Student ID</th>
+                                <th><i class="bi bi-person me-1"></i>Name</th>
+                                <th><i class="bi bi-check-circle me-1"></i>Status</th>
+                                <th><i class="bi bi-chat-dots me-1"></i>Remarks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for student in students %}
+                            <tr>
+                                <td>{{ student.student_id }}</td>
+                                <td>{{ student.first_name }} {{ student.last_name }}</td>
+                                <td>
+                                    <select name="status_{{ student.id }}" class="form-select form-select-sm status-select" data-tooltip="Mark attendance status">
+                                        <option value="present" data-icon="bi-check-circle" class="badge-present">✓ Present</option>
+                                        <option value="absent" selected data-icon="bi-x-circle" class="badge-absent">✗ Absent</option>
+                                        <option value="late" data-icon="bi-exclamation-circle" class="badge-late">⚠ Late</option>
+                                        <option value="excused" data-icon="bi-info-circle" class="badge-excused">ℹ Excused</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="text" name="remarks_{{ student.id }}" class="form-control form-control-sm" placeholder="Optional remarks" data-tooltip="Add optional remarks">
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% if students %}
+                    {% include 'atoms/button.html' with text='Submit Attendance' variant='success' type='submit' class='w-100' icon='bi-check-lg' %}
+                {% else %}
+                    <div class="empty-state">
+                        <div class="empty-state-icon"><i class="bi bi-inbox"></i></div>
+                        <div class="empty-state-text">No Students Enrolled</div>
+                        <div class="empty-state-hint">There are no students in this course yet.</div>
+                    </div>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+</div>
