@@ -11,7 +11,3 @@ services:
         value: false
       - key: PYTHON_VERSION
         value: 3.13.4
-    disk:
-      name: attendance-data
-      mountPath: /data
-      sizeGB: 1
